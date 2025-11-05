@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE rfc>
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<!-- used by XSLT processors -->
+<!-- For a complete list and description of processing instructions (PIs),
+     please see http://xml.resource.org/authoring/README.html. -->
+<!-- Below are generally applicable Processing Instructions (PIs) that most I-Ds might want to use.
+     (Here they are set differently than their defaults in xml2rfc v1.32) -->
+<?rfc strict="yes" ?>
+<!-- give errors regarding ID-nits and DTD validation -->
+<!-- control the table of contents (ToC) -->
+<?rfc toc="yes"?>
+<!-- generate a ToC -->
+<?rfc tocdepth="4"?>
+<!-- the number of levels of subsections in ToC. default: 3 -->
+<!-- control references -->
+<?rfc symrefs="yes"?>
+<!-- use symbolic references tags, i.e, [RFC2119] instead of [1] -->
+<?rfc sortrefs="yes" ?>
+<!-- sort the reference entries alphabetically -->
+<!-- control vertical white space
+     (using these PIs as follows is recommended by the RFC Editor) -->
+<?rfc compact="yes" ?>
+<!-- do not start each main section on a new page -->
+<?rfc subcompact="no" ?>
+<!-- keep one blank line between list items -->
+<!-- end of list of popular I-D processing instructions -->
+
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude"
+        category="std" consensus="true"
+        docName="draft-huque-dnsop-private-metatypes-00"
+        ipr="trust200902" updates="6895" obsoletes=""
+        submissionType="IETF" xml:lang="en"
+        tocInclude="true" tocDepth="4"
+        symRefs="true" sortRefs="true" version="3">
+
+  <!-- ***** FRONT MATTER ***** -->
+
+  <front>
+
+    <title abbrev="DNS Private Meta-types">
+       Private Use Meta-types for DNS
+    </title>
+    <seriesInfo name="Internet-Draft" value="draft-huque-dnsop-private-metatypes-00"/>
+
+    <author fullname="Shumon Huque" initials="S." surname="Huque">
+      <organization>Salesforce</organization>
+      <address>
+        <email>shuque@gmail.com</email>
+      </address>
+    </author>
+
+    <author fullname="Mark Andrews" initials="M." surname="Andrews">
+      <organization>Internet Systems Consortium</organization>
+      <address>
+        <email>marka@isc.org</email>
+      </address>
+    </author>
+
+    <date day="5" month="11" year="2025"/>
+    <!-- Meta-data Declarations -->
+
+    <area>General</area>
+    <workgroup>Internet Engineering Task Force</workgroup>
+    <keyword>Internet-Draft</keyword>
+    <keyword>DNS</keyword>
+    <keyword>Private</keyword>
+    <keyword>RR Type</keyword>
+
+    <abstract>
+     <t>
+        The DNS protocol supports three subcategories of Resource Record
+        Types (RRTYPE): data types, QTYPES, and Meta-TYPES. There is a
+        dedicated subrange of the RRTYPE space for Q and Meta-TYPES
+        (128-155). The DNS protocol also defines a subrange of the RRTYPE
+        space dedicated to private use (65280-65534), however this subrange
+        has no corresponding subdivision into data versus Q and Meta-TYPES.
+        This document proposes such a subdivision.
+     </t>
+    </abstract>
+
+    <note removeInRFC="true">
+       <name>Discussion Venues</name>
+       <t>Source for this draft and an issue tracker can be found at
+       <eref target="https://github.com/shuque/ietf-private-metatypes"/>.</t>
+    </note>
+
+  </front>
+
+  <middle>
+
+    <section anchor="intro" numbered="true" toc="default">
+      <name>Introduction</name>
+     <t>
+        As described in <xref target="RFC6895">DNS IANA Considerations
+       </xref>, the DNS protocol supports three subcategories of Resource
+        Record Types (RRTYPE): data types, QTYPES, and Meta-TYPES. There is
+        a dedicated subrange of the RRTYPE space for Q and Meta-TYPES
+        (128-155). The DNS protocol also defines a subrange of the RRTYPE
+        space dedicated to private use (65280-65534), however this subrange
+        has no corresponding subdivision into data versus Q and Meta-TYPES.
+        This document proposes such a subdivision.
+     </t>
+     <t>
+        There are currently four Meta-TYPEs assigned: OPT [RFC6891],
+        TSIG, TKEY, and NXNAME. There are currently five QTYPEs assigned:
+        * (ALL/ANY), MAILA, MAILB, AXFR, and IXFR.
+     </t>
+     <t>
+        Many resolvers implementations treat queries for Meta-types
+        specially. If the query is for an unknown Meta-type or for a
+        Meta-type with undefined (or forbidden) query behavior, the
+        resolver will treat it like an invalid query. It will not
+        attempt to perform iterative resolution for it, and return an
+        error back to the querier, typically format error (FORMERR).
+        This kind of behavior is not possible with private types,
+        since the private RR type space has no differentiation of data
+        types versus Q and Meta-TYPES. This makes it difficult to experiment
+        with new Q or Meta-TYPES utilizing private RR types. Notably,
+        this posed challenges when the NXNAME Meta-type was deployed
+        in the field using a private type code, prior to standardization.
+     </t>
+    </section>
+
+    <section anchor="range" numbered="true" toc="default">
+      <name>Private Q and Meta-Types Range</name>
+      <t>
+        The definition of new Q and Meta-types is expected to be
+        quite infrequent, so only a small subrange should be sufficient,
+        e.g. 16 code points. We present two options, and choose one.
+      </t>
+      <t>
+        Option 1: Subset of "Reserved for Private Use" Range:
+      </t>
+      <artwork name="" type="" align="left" alt=""><![CDATA[
+        65280-65295     Private Use Q amd Meta-types             (16)
+        65296-65534     Private Use Data-types                  (239)
+        ]]></artwork>
+      <t>
+        Option 2: Subset of "Reserved for Future Use" Range:
+      </t>
+      <artwork name="" type="" align="left" alt=""><![CDATA[
+        61440-65263     Reserved for future use (IETF review)
+        65264-65279     Private Use Q and Meta-types
+        ]]></artwork>
+    </section>
+
+    <section anchor="updates" numbered="true" toc="default">
+      <name>Updates to RFCs</name>
+      <t>
+        Update the RR type ranges described in RFC 6895 with the
+        information from the previous section.
+      </t>
+    </section>
+
+    <section anchor="security" numbered="true" toc="default">
+      <name>Security Considerations</name>
+      <t>
+        None.
+      </t>
+    </section>
+
+    <section anchor="iana" numbered="true" toc="default">
+      <name>IANA Considerations</name>
+      <t>
+        Lorem ipsum.
+      </t>
+    </section>
+
+  </middle>
+
+  <!--  *****BACK MATTER ***** -->
+
+  <back>
+
+    <references>
+      <name>References</name>
+      <references>
+        <name>Normative References</name>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6895.xml"/>
+      </references>
+      <references>
+        <name>Informative References</name>
+      </references>
+    </references>
+
+  </back>
+
+</rfc>
