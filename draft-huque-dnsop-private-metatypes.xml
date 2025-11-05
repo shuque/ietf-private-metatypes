@@ -41,7 +41,7 @@
   <front>
 
     <title abbrev="DNS Private Meta-types">
-       Private Use Meta-types for DNS
+       Private Use Q and Meta-types for DNS
     </title>
     <seriesInfo name="Internet-Draft" value="draft-huque-dnsop-private-metatypes-00"/>
 
@@ -147,11 +147,23 @@
         ]]></artwork>
     </section>
 
+    <section anchor="unknown" numbered="true" toc="default">
+      <name>Handling Unknown Q and Meta-Types</name>
+      <t>
+        DNS servers MUST return an error when receiving a query for
+        an unknown Q or Meta-Type. This applies generally to both
+        private and non-private Q and Meta-Types. The recommended
+        response code is Format Error (FORMERR). In particular,
+        resolvers should not attempt to perform iterative resolution
+        for such queries.
+      </t>
+    </section>
+
     <section anchor="updates" numbered="true" toc="default">
       <name>Updates to RFCs</name>
       <t>
         Update the RR type ranges described in RFC 6895 with the
-        information from the previous section.
+        information from  <xref target="range"/>.
       </t>
     </section>
 
