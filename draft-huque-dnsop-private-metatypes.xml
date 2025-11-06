@@ -59,7 +59,7 @@
       </address>
     </author>
 
-    <date day="5" month="11" year="2025"/>
+    <date day="6" month="11" year="2025"/>
     <!-- Meta-data Declarations -->
 
     <area>General</area>
@@ -104,14 +104,17 @@
         This document proposes such a subdivision.
      </t>
      <t>
-        There are currently four Meta-TYPEs assigned: OPT [RFC6891],
-        TSIG, TKEY, and NXNAME. There are currently five QTYPEs assigned:
-        * (ALL/ANY), MAILA, MAILB, AXFR, and IXFR.
+        Informational: There are currently four Meta-TYPEs assigned:
+        OPT [RFC6891], TSIG, TKEY, and NXNAME. There are currently
+        five QTYPEs assigned: * (ALL/ANY), MAILA, MAILB, AXFR, and IXFR.
+        Notably the OPT meta-type is not assigned from the Q and Meta-Type
+        space (presumably because it predated the current RR type space
+        classification).
      </t>
      <t>
-        Many resolvers implementations treat queries for Meta-types
-        specially. If the query is for an unknown Meta-type or for a
-        Meta-type with undefined (or forbidden) query behavior, the
+        Many resolvers implementations treat queries for Q and Meta-types
+        specially. If the query is for an unknown Q or Meta-type or for
+        a Meta-type with undefined (or forbidden) query behavior, the
         resolver will treat it like an invalid query. It will not
         attempt to perform iterative resolution for it, and return an
         error back to the querier, typically format error (FORMERR).
@@ -119,8 +122,9 @@
         since the private RR type space has no differentiation of data
         types versus Q and Meta-TYPES. This makes it difficult to experiment
         with new Q or Meta-TYPES utilizing private RR types. Notably,
-        this posed challenges when the NXNAME Meta-type was deployed
-        in the field using a private type code, prior to standardization.
+        this posed challenges when the <xref target="RFC9824">NXNAME
+        Meta-type</xref> was deployed in the field using a private RR
+        type code, prior to standardization.
      </t>
     </section>
 
@@ -129,7 +133,7 @@
       <t>
         The definition of new Q and Meta-types is expected to be
         quite infrequent, so only a small subrange should be sufficient,
-        e.g. 16 code points. We present two options, and choose one.
+        e.g. 16 code points. We present two options, and should choose one.
       </t>
       <t>
         Option 1: Subset of "Reserved for Private Use" Range:
@@ -139,7 +143,8 @@
         65296-65534     Private Use Data-types                  (239)
         ]]></artwork>
       <t>
-        Option 2: Subset of "Reserved for Future Use" Range:
+        Option 2: Subset of "Reserved for Future Use" Range, immediately
+        before and adjacent to the current Private Use Range:
       </t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
         61440-65263     Reserved for future use (IETF review)
@@ -167,6 +172,15 @@
       </t>
     </section>
 
+    <section anchor="open" numbered="true" toc="default">
+      <name>Open Questions</name>
+      <t>
+        Is this proposal best described in a separate RFC, or should
+        it instead be part of an update to the
+        <xref target="RFC6895">DNS IANA Considerations RFC</xref>?
+      </t>
+    </section>
+
     <section anchor="security" numbered="true" toc="default">
       <name>Security Considerations</name>
       <t>
@@ -177,7 +191,7 @@
     <section anchor="iana" numbered="true" toc="default">
       <name>IANA Considerations</name>
       <t>
-        Lorem ipsum.
+        See <xref target="range"/>.
       </t>
     </section>
 
@@ -195,6 +209,7 @@
       </references>
       <references>
         <name>Informative References</name>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9824.xml"/>
       </references>
     </references>
 
