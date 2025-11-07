@@ -30,7 +30,7 @@
 
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude"
         category="std" consensus="true"
-        docName="draft-huque-dnsop-private-metatypes-00"
+        docName="draft-huque-dnsop-private-metatypes-01"
         ipr="trust200902" updates="6895" obsoletes=""
         submissionType="IETF" xml:lang="en"
         tocInclude="true" tocDepth="4"
@@ -43,7 +43,7 @@
     <title abbrev="DNS Private Meta-types">
        Private Use Q and Meta-types for DNS
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-huque-dnsop-private-metatypes-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-huque-dnsop-private-metatypes-01"/>
 
     <author fullname="Shumon Huque" initials="S." surname="Huque">
       <organization>Salesforce</organization>
@@ -59,7 +59,7 @@
       </address>
     </author>
 
-    <date day="6" month="11" year="2025"/>
+    <date day="7" month="11" year="2025"/>
     <!-- Meta-data Declarations -->
 
     <area>General</area>
@@ -147,8 +147,8 @@
         before and adjacent to the current Private Use Range:
       </t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
-        61440-65263     Reserved for future use (IETF review)
-        65264-65279     Private Use Q and Meta-types
+        65264-65279     Private Use Q and Meta-types             (16)
+        65280-65534     Private Use Data-types                  (255)
         ]]></artwork>
     </section>
 
@@ -158,9 +158,10 @@
         DNS servers MUST return an error when receiving a query for
         an unknown Q or Meta-Type. This applies generally to both
         private and non-private Q and Meta-Types. The recommended
-        response code is Format Error (FORMERR). In particular,
-        resolvers should not attempt to perform iterative resolution
-        for such queries.
+        response code is Format Error (FORMERR), preferably accompanied
+        with an Extended DNS Error code of 'Invalid Query Type' (Info-Code
+        30). In particular, resolvers should not attempt to perform
+        iterative resolution for such queries.
       </t>
     </section>
 
